@@ -1,0 +1,39 @@
+#include <cmath>
+#include <queue>
+#include <vector>
+
+class Solution {
+public:
+    vector<vector<int>> kClosest(vector<vector<int>>& points, int k) {
+    
+        //Create max heap of size k
+        //If priority queue/max heap size is greater than k, pop() max element
+        //After iterating through entire vector, queue will be left k smallest elements
+        //Max Heap index 0 (so top()) will be kth smallest element
+
+        //Create 2D priority queue (eucDistance, (x,y coordinates));
+        //priority_queue<vector<vector<int>>, vector<vector<int>>, greater<int>> maxHeap;
+        typedef pair<double, pair<int, int>> coordinate;
+        priority_queue<coordinate, vector<coordinate>, less<coordinate>> pq; //maxHeap stores distances
+        double eucDistance = 0;
+        for (auto point: points){
+            eucDistance = sqrt(pow(point[0], 2) + pow(point[1], 2));
+            pq.push(make_pair(eucDistance, make_pair(point[0], point[1])));
+            if (pq.size() > k){
+                pq.pop();
+            }
+        }
+
+        //now you have a maxHeap with k smallest distances
+        //Add values to vector of size k
+        vector<vector<int>> kthElements;
+        while (!pq.empty()){
+            //first() is distance, second is (x, y)
+            auto xpoint = pq.top().second.first; //second.first is x coordinate
+            auto ypoint = pq.top().second.second; //second.second is y coordinate 
+            kthElements.push_back({xpoint, ypoint});
+            pq.pop();
+        }
+        return kthElements;
+    }
+};
