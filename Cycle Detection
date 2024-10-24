@@ -1,0 +1,22 @@
+/*
+ * For your reference:
+ *
+ * SinglyLinkedListNode {
+ *     int data;
+ *     SinglyLinkedListNode* next;
+ * };
+ *
+ */
+
+bool has_cycle(SinglyLinkedListNode* head) {
+    unordered_set<SinglyLinkedListNode*> noDups;
+    SinglyLinkedListNode* temp = head;
+    while(temp != nullptr){
+        if (noDups.find(temp) != noDups.end()){
+            return true;
+        }
+        else noDups.insert(temp);
+        temp = temp->next;
+    }
+    return false;
+}
