@@ -1,0 +1,57 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include <stack>
+using namespace std;
+
+
+int main() {
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */
+    
+    //cin stops at first whitespace
+    int instructCount;
+    int instructType;
+    cin >> instructCount; //get first instruction
+    
+    stack<int> stk1; //for enqueueing
+    stack<int> stk2; //for dequeueing
+       
+    for (int i = 0; i < instructCount; i++){
+        cin >> instructType; //get next instruction
+        
+        if (instructType == 1) //enqueue
+        { 
+            int newVal;
+            cin >> newVal;
+            stk1.push(newVal);
+        } 
+        else if (instructType == 2) //dequeue
+        {  
+            if (stk2.empty()){
+                while (!stk1.empty()){
+                    stk2.push(stk1.top());
+                    stk1.pop();
+                }
+            }
+            if (!stk2.empty()){
+                stk2.pop();
+            }
+        } 
+        else if (instructType == 3){ //print
+            if (stk2.empty()) {
+                // Move all elements from stack1 to stack2
+                while (!stk1.empty()) {
+                    stk2.push(stk1.top());
+                    stk1.pop();
+                }
+            }
+            // Return the top element of stack2 if it's not empty
+            if (!stk2.empty()) cout << stk2.top() << endl;
+        }
+         
+    }
+    
+    return 0;
+}
