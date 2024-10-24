@@ -1,0 +1,8 @@
+int solution(int n) {
+    string hello = to_string(n);
+    int total = 0;
+    for (char letter: hello){
+        total += letter - '0';
+    }
+    return total;
+}
