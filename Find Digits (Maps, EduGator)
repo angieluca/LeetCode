@@ -1,0 +1,33 @@
+#include <iostream>
+#include <string>
+#include <algorithm>
+#include <set>
+#include <map>
+
+std::string findTheDigits(std::string x, std::string y) {
+    
+    std::string result = "";
+    //create map where {key = number, value = times it appears in y}
+    std::map<char, int> numsY;
+    for (char num: y){
+      if (numsY.find(num) != numsY.end()){ //already exists
+          numsY[num] += 1; //add tonumber of times it exists
+      } else {
+          numsY.insert({num, 1});
+      }
+    }
+    //iterate through x and every time a number appears, reduce amt time appears
+    for (char num: x){
+        if (numsY.find(num) != numsY.end()){
+            numsY[num] -= 1;
+        }
+    }
+    //create the output string
+    for (auto numpair: numsY){
+        for (int i = 0; i < numpair.second; i++){
+            result += numpair.first;
+        }
+    }
+      
+    return result;
+}
