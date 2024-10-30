@@ -1,0 +1,36 @@
+#include <iostream>
+#include <string>
+#include <map>
+
+int degreeOfString(std::string str)
+{
+    char max;
+    int maxFreq = 0;
+    std::map<char, int> freqMap;
+  
+    for (char thing: str){
+      if (freqMap.find(thing) != freqMap.end()){ //character already exists
+          freqMap[thing] += 1;
+          if (freqMap[thing] > maxFreq){
+            max = thing; //check which is max
+            maxFreq = freqMap[thing];
+          } 
+      } else {
+        freqMap.insert({thing, 1}); //insert into map
+      }
+    }
+
+  
+    int maxLength = 0;
+    int timesFound = 0; //times found has to equal maxFreq
+    for (char thing: str){
+      if (thing == max){ 
+        maxLength++;
+        timesFound++;
+      } else if (maxLength > 0 && thing != max) {
+        maxLength++;
+      }
+      if (timesFound == maxFreq) break;
+    }
+	return maxLength;
+}
